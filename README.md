@@ -1,3 +1,4 @@
+
 # Quote Keeper
 
 A beautiful and intuitive web application that lets you discover, save, and manage your favorite motivational quotes. Built with React, TypeScript, and Chakra UI.

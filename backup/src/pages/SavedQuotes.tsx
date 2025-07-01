@@ -3,10 +3,10 @@ import { Box, Button, Card, CardBody, CardHeader, Flex, Heading, IconButton, Tex
 import { FaHeart, FaQuoteLeft, FaTrash } from 'react-icons/fa';
 
 interface Quote {
-  id: string;
+  _id: string;
   content: string;
   author: string;
-  tags?: string[];
+  tags: string[];
 }
 
 export const SavedQuotes = () => {
@@ -21,7 +21,7 @@ export const SavedQuotes = () => {
   }, []);
 
   const handleRemoveQuote = (id: string) => {
-    const updatedQuotes = savedQuotes.filter(quote => quote.id !== id);
+    const updatedQuotes = savedQuotes.filter(quote => quote._id !== id);
     setSavedQuotes(updatedQuotes);
     localStorage.setItem('savedQuotes', JSON.stringify(updatedQuotes));
     
@@ -54,7 +54,7 @@ export const SavedQuotes = () => {
       </Heading>
       
       {savedQuotes.map((quote) => (
-        <Card key={quote.id} bg="gray.800" color="white" borderWidth="1px" borderColor="gray.700">
+        <Card key={quote._id} bg="gray.800" color="white" borderWidth="1px" borderColor="gray.700">
           <CardHeader pb={0}>
             <Flex justify="space-between" align="center">
               <Box>
@@ -67,7 +67,7 @@ export const SavedQuotes = () => {
                 size="sm"
                 colorScheme="red"
                 variant="ghost"
-                onClick={() => handleRemoveQuote(quote.id)}
+                onClick={() => handleRemoveQuote(quote._id)}
               />
             </Flex>
           </CardHeader>

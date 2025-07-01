@@ -121,17 +121,8 @@ export const Home = ({ fetchRandomQuote, isLoading: isFetching }: HomeProps) => 
   }
 
   return (
-    <Box 
-      minH="100vh" 
-      bgGradient={bgGradient} 
-      display="flex" 
-      flexDirection="column" 
-      alignItems="center"
-      pt={8}
-      px={4}
-      pb={4}
-    >
-      <Container maxW="2xl" centerContent p={0}>
+    <Box minH="100vh" bgGradient={bgGradient} py={8} px={4}>
+      <Container maxW="3xl" centerContent>
         <Card 
           bg={cardBg}
           borderWidth="1px"
@@ -142,10 +133,23 @@ export const Home = ({ fetchRandomQuote, isLoading: isFetching }: HomeProps) => 
           w="100%"
           maxW="2xl"
         >
-          <CardHeader textAlign="center">
-            <Heading size="lg" color={accentColor} fontWeight="bold">
-              Daily Inspiration
-            </Heading>
+          <CardHeader>
+            <Flex justify="space-between" align="center">
+              <Heading size="lg" color={accentColor} fontWeight="bold">
+                Daily Inspiration
+              </Heading>
+              <Tooltip label="Get new quote" aria-label="New quote">
+                <IconButton
+                  icon={<FaSync />}
+                  aria-label="New quote"
+                  onClick={loadNewQuote}
+                  isLoading={isFetching}
+                  colorScheme="brand"
+                  variant="ghost"
+                  isRound
+                />
+              </Tooltip>
+            </Flex>
           </CardHeader>
           
           <CardBody py={8}>
@@ -204,28 +208,12 @@ export const Home = ({ fetchRandomQuote, isLoading: isFetching }: HomeProps) => 
           </CardBody>
           
           <CardFooter pt={0} justifyContent="center" pb={6}>
-            <Flex gap={4} justify="center" w="100%" px={4}>
+            <Tooltip 
+              label={currentQuote && isQuoteSaved(currentQuote.id) ? 'Remove from saved' : 'Save this quote'}
+              aria-label={currentQuote ? 'Save quote' : 'No quote to save'}
+            >
               <Button
-                onClick={loadNewQuote}
-                isLoading={isFetching}
-                colorScheme="pink"
-                variant="solid"
-                size="lg"
-                px={8}
-                borderRadius="full"
-                boxShadow="md"
-                _hover={{
-                  transform: 'translateY(-2px)',
-                  boxShadow: 'lg',
-                }}
-                _active={{
-                  transform: 'translateY(0)',
-                }}
-                transition="all 0.2s"
-              >
-                New Quote
-              </Button>
-              <Button
+                leftIcon={currentQuote && isQuoteSaved(currentQuote.id) ? <FaHeartBroken /> : <FaBookmark />}
                 colorScheme={currentQuote && isQuoteSaved(currentQuote.id) ? 'red' : 'brand'}
                 variant="solid"
                 onClick={handleSaveQuote}
@@ -234,7 +222,6 @@ export const Home = ({ fetchRandomQuote, isLoading: isFetching }: HomeProps) => 
                 size="lg"
                 px={8}
                 borderRadius="full"
-                boxShadow="md"
                 _hover={{
                   transform: 'translateY(-2px)',
                   boxShadow: 'lg',
@@ -244,12 +231,14 @@ export const Home = ({ fetchRandomQuote, isLoading: isFetching }: HomeProps) => 
                 }}
                 transition="all 0.2s"
               >
-                {currentQuote && isQuoteSaved(currentQuote.id) ? 'Saved' : 'Save'}
+                {currentQuote && isQuoteSaved(currentQuote.id) ? 'Saved' : 'Save Quote'}
               </Button>
-            </Flex>
+            </Tooltip>
           </CardFooter>
         </Card>
       </Container>
     </Box>
   );
 };
+
+export default Home;
